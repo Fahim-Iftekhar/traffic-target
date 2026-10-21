@@ -1,0 +1,12 @@
+# build output
+TrafficTarget.exe
+*.pdb
+build_log.txt
+dist/
+*.zip
+
+# local leftovers
+old_v1/
+*.tmp
+Thumbs.db
+desktop.ini
