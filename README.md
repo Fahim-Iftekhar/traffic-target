@@ -76,7 +76,7 @@ build.bat
 
 `build.bat` compiles every file under `src\` with `%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\csc.exe`, writes `TrafficTarget.exe` next to it, and starts it. The compiler output goes to `build_log.txt`. The code sticks to C# 5 so that this built-in compiler can build it.
 
-Every push is also built by [GitHub Actions](.github/workflows/build.yml) on `windows-latest`; pushing a `v*` tag publishes a release with the executable attached.
+Every push is also built by [GitHub Actions](.github/workflows/build.yml) on `windows-latest`. To release, bump `AppInfo.Version` in `src/Program.cs`, add a section to [CHANGELOG.md](CHANGELOG.md) and push to `main`: the workflow publishes `v<version>` with the executable attached.
 
 ## How it works
 
