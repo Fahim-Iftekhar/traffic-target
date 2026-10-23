@@ -80,32 +80,27 @@ Every push is also built by [GitHub Actions](.github/workflows/build.yml) on `wi
 
 ## How it works
 
-### The Day calculation (Excel sheet "Day")
+### Today's target
 
-| Cell | Meaning | Formula |
-|---|---|---|
-| B3 | Required GB for the day | **you enter it** (or follow the year plan) |
-| B4 | Completed today (GB) | from the traffic source |
-| B5 | Remaining GB | `B3 - B4` |
-| C5 | Minutes left today | Windows clock, until 12:00 AM |
-| F3 | GB per minute | `B5 / C5` |
-| G3 | **Required speed (MB/s)** | `F3 * 1024 / 60` |
+| Value | How it's calculated |
+|---|---|
+| Remaining GB | daily target − completed today |
+| Minutes left | from the Windows clock, until 12:00 AM |
+| GB per minute | remaining GB ÷ minutes left |
+| **Required speed** | GB per minute × 1024 ÷ 60 (MB/s) |
 
-### The Year calculation (Excel sheet "Year")
+### This year's target
 
-| Cell | Meaning | Formula |
-|---|---|---|
-| E3 | Target (TB) | **you enter it** |
-| F3 | Completed (TB) | this year's total from the traffic history (or typed) |
-| G3 | Required (TB) | `E3 - F3` |
-| H3 | Required (GB) | `G3 * 1024` |
-| C6 | Days left | today → 31 December, today included (Windows date) |
-| I3 | **GB per day** | `H3 / C6` |
-| J3 | GB per week | `I3 * 7` |
+| Value | How it's calculated |
+|---|---|
+| Required | yearly target − completed this year (TB; × 1024 for GB) |
+| Days left | today to 31 December, today included, from the Windows date |
+| **GB per day** | required GB ÷ days left |
+| GB per week | GB per day × 7 |
 
-Units follow the original workbook: 1 TB = 1024 GB and 1 GB = 1024 MB.
+Units: 1 TB = 1024 GB and 1 GB = 1024 MB.
 
-**Today's share of the year plan** is `(target TB - completed before today) * 1024 / days left`. It's fixed for the whole day, so you can use it as the day target (*Follow year plan*).
+**Today's share of the year plan** is (yearly target − completed before today) × 1024 ÷ days left. It's fixed for the whole day, so you can use it as the day target (*Follow year plan*).
 
 ### Forecasts
 
@@ -161,7 +156,7 @@ traffic-target/
 │  ├─ Program.cs             entry point, single instance, crash log, Win32 helpers
 │  ├─ Core/
 │  │  ├─ AppSettings.cs      settings.ini load/save, start-with-Windows
-│  │  ├─ Plans.cs            DayPlan / YearPlan: the Excel formulas
+│  │  ├─ Plans.cs            DayPlan / YearPlan: daily and yearly target calculations
 │  │  └─ Traffic.cs          history files, adapter counter, TrafficEngine (sources, live speed, demo data)
 │  └─ UI/
 │     ├─ Theme.cs            light/dark palettes, fonts, DPI scaling, formatting
